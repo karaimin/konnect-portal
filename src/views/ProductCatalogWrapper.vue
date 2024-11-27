@@ -10,7 +10,8 @@
       <h1 class="products-title mb-5 font-normal color-text_colors-hero text-4xl">
         {{ primary_header }}
       </h1>
-      <div class="w-full max-w-lg mx-auto inline-flex">
+
+      <div class="w-full max-w-lg mx-auto flex flex-col">
         <form
           id="searchProductsForm"
           @submit.prevent="searchProducts"
@@ -38,8 +39,31 @@
             {{ searchString !== '' && loading ? helpText.searching : helpText.search }}
           </KButton>
         </form>
+
+        <!-- AI Assistant Banner -->
+        <div class="ai-assistant-banner mt-2">
+          <router-link 
+            :to="{ name: 'chat' }"
+            class="flex items-center p-2"
+            data-testid="try-ai-assistant"
+          >
+            <span class="ai-icon mr-2">🤖</span>
+            <span class="color-text_colors-secondary text-sm mr-3">
+              {{ aiAssistantText.shortDescription }}
+            </span>
+            <span class="flex items-center text-sm font-medium color-text_colors-accent ml-auto">
+              {{ aiAssistantText.tryButton }}
+              <KIcon 
+                icon="arrowRight"
+                size="16"
+                class="ml-1"
+              />
+            </span>
+          </router-link>
+        </div>
       </div>
     </div>
+
     <Catalog
       :catalog-items="catalogItems"
       :cards-per-page="cardsPerPage"
@@ -76,6 +100,7 @@ export default defineComponent({
     const catalogView = ref<string>(undefined)
     const catalogPageNumber = ref(1)
     const helpText = useI18nStore().state.helpText.products
+    const aiAssistantText = useI18nStore().state.helpText.aiAssistant
 
     const { portalApiV2 } = usePortalApi()
 
@@ -202,6 +227,7 @@ export default defineComponent({
       catalogView,
       catalogPageNumber,
       helpText,
+      aiAssistantText,
       searchProducts,
       catalogViewChanged,
       catalogPageChanged
@@ -232,5 +258,25 @@ export default defineComponent({
       font-weight: normal !important;
     }
   }
+
+  .ai-assistant-banner {
+    background: var(--section_colors-primary);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    
+    &:hover {
+      background: var(--section_colors-tertiary);
+    }
+
+    .ai-icon {
+      font-size: 1rem;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 </style>

@@ -191,6 +191,14 @@ export const portalRouter = () => {
             component: () => {
               window.location.href = '/404'
             }
+          },
+          {
+            path: '/chat',
+            name: 'chat',
+            meta: {
+              title: helpText.chatTitle
+            },
+            component: () => import('../views/Chat.vue')
           }
         ]
       }

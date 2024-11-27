@@ -336,6 +336,7 @@ export interface I18nType {
     notFoundTitle: string;
     forbiddenTitle: string;
     errorTitle: string;
+    chatTitle: string;
   };
   oauth2: {
     dataNotFound: string;
@@ -343,5 +344,15 @@ export interface I18nType {
     moreInfo: string;
     authMaybeUnsafe: string;
     defaultError: string;
+  },
+  chat: {
+    title: string;
+    inputPlaceholder: string;
+    send: string;
+    error: string;
+  },
+  aiAssistant: {
+    shortDescription: string;
+    tryButton: string;
   }
 }

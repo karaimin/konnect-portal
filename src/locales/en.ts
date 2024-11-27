@@ -343,5 +343,15 @@ export const en = {
     moreInfo: 'More info: ',
     authMaybeUnsafe: "Authorization may be unsafe, passed state was changed in server Passed state wasn't returned from auth server",
     defaultError: '[Authorization failed]: no accessCode received from the server'
-  }
+  },
+  chat: {
+    title: 'AI Chat',
+    inputPlaceholder: 'Type your message...',
+    send: 'Send',
+    error: 'An error occurred while sending your message. Please try again.'
+  },
+  aiAssistant: {
+    shortDescription: 'Need help with APIs?',
+    tryButton: 'Ask AI Assistant',
+  },
 }
