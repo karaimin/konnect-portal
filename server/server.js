@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const morgan = require('morgan')
+const crypto = require('crypto')
 const { logger, morganStream } = require('./logger')
 
 const app = express()

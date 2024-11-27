@@ -28,6 +28,7 @@ interface ChatRequest {
 
 export class ChatService {
   private baseUrl: string
+  private readonly orgUnitId = '14667939-6a1d-473a-8457-6a5f4de8c401'
 
   constructor () {
     this.baseUrl = config.apiBaseUrl
@@ -47,8 +48,13 @@ export class ChatService {
     }
 
     const response = await axios.post<ChatResponse>(
-      `${this.baseUrl}/api/chat`,
-      payload
+      `${this.baseUrl}/api/v1/ai-gateway/api-assistant/invoke`,
+      payload,
+      {
+        headers: {
+          'org-unit-id': this.orgUnitId
+        }
+      }
     )
 
     return response.data
