@@ -42,7 +42,7 @@
 
         <!-- AI Assistant Banner -->
         <div class="ai-assistant-banner mt-2">
-          <router-link 
+          <router-link
             :to="{ name: 'chat' }"
             class="flex items-center p-2"
             data-testid="try-ai-assistant"
@@ -53,7 +53,7 @@
             </span>
             <span class="flex items-center text-sm font-medium color-text_colors-accent ml-auto">
               {{ aiAssistantText.tryButton }}
-              <KIcon 
+              <KIcon
                 icon="arrowRight"
                 size="16"
                 class="ml-1"
@@ -264,7 +264,7 @@ export default defineComponent({
     border-radius: 4px;
     transition: background-color 0.2s ease;
     width: 100%;
-    
+
     &:hover {
       background: var(--section_colors-tertiary);
     }

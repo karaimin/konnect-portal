@@ -29,11 +29,11 @@ interface ChatRequest {
 export class ChatService {
   private baseUrl: string
 
-  constructor() {
+  constructor () {
     this.baseUrl = config.apiBaseUrl
   }
 
-  async sendMessage(messages: ChatMessage[]): Promise<ChatResponse> {
+  async sendMessage (messages: ChatMessage[]): Promise<ChatResponse> {
     const payload: ChatRequest = {
       config: {
         max_concurrency: 5
@@ -50,6 +50,7 @@ export class ChatService {
       `${this.baseUrl}/api/chat`,
       payload
     )
+
     return response.data
   }
 }

@@ -352,6 +352,6 @@ export const en = {
   },
   aiAssistant: {
     shortDescription: 'Need help with APIs?',
-    tryButton: 'Ask AI Assistant',
-  },
+    tryButton: 'Ask AI Assistant'
+  }
 }

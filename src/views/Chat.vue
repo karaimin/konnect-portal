@@ -4,11 +4,11 @@
       :title="helpText.chat.title"
       class="mb-6"
     />
-    
+
     <div class="chat-container">
-      <div 
-        class="messages-container" 
+      <div
         ref="messagesContainer"
+        class="messages-container"
         data-testid="chat-messages"
       >
         <div
@@ -17,24 +17,27 @@
           :class="['message', message.type === 'human' ? 'user' : 'ai']"
           :data-testid="`chat-message-${message.type}`"
         >
-          <div 
+          <div
             class="message-content"
             v-html="renderMarkdown(message.content)"
           />
         </div>
-        
-        <div 
-          v-if="currentState.matches('pending')" 
+
+        <div
+          v-if="currentState.matches('pending')"
           class="message ai loading"
         >
           <div class="message-content">
-            <span class="loading-dots"></span>
+            <span class="loading-dots" />
           </div>
         </div>
       </div>
 
       <div class="input-container">
-        <form @submit.prevent="sendMessage" class="input-form">
+        <form
+          class="input-form"
+          @submit.prevent="sendMessage"
+        >
           <KInput
             v-model="userInput"
             type="text"
@@ -61,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, nextTick } from 'vue'
+import { defineComponent, ref, nextTick } from 'vue'
 import { useMachine } from '@xstate/vue'
 import { createMachine } from 'xstate'
 import { useI18nStore } from '@/stores'
@@ -81,7 +84,7 @@ export default defineComponent({
   components: {
     PageTitle
   },
-  setup() {
+  setup () {
     const helpText = useI18nStore().state.helpText
     const { notify } = useToaster()
     const userInput = ref('')
@@ -96,9 +99,9 @@ export default defineComponent({
           on: { SUBMIT: 'pending' }
         },
         pending: {
-          on: { 
+          on: {
             RESOLVE: 'idle',
-            REJECT: 'error' 
+            REJECT: 'error'
           }
         },
         error: {
@@ -127,18 +130,16 @@ export default defineComponent({
         type: 'human',
         tempId: uuidv4()
       }
-      
+
       messages.value.push(tempMessage)
 
-      // Clear input
-      const userMessage = userInput.value
       userInput.value = ''
 
       await scrollToBottom()
 
       try {
         const response = await chatService.sendMessage(messages.value)
-        
+
         // Update messages with the complete chat history from the server
         messages.value = response.output.messages
 
@@ -150,7 +151,7 @@ export default defineComponent({
           appearance: 'danger',
           message: helpText.chat.error
         })
-        
+
         // Remove the temporary message on error
         messages.value = messages.value.filter(msg => msg.tempId !== tempMessage.tempId)
       }
@@ -242,7 +243,7 @@ export default defineComponent({
         align-items: center;
         gap: 4px;
         min-width: 60px;
-        
+
         .loading-dots {
           display: inline-block;
           &::after {
@@ -291,7 +292,7 @@ export default defineComponent({
     padding: 1em;
     border-radius: 4px;
     overflow-x: auto;
-    
+
     code {
       background: none;
       padding: 0;
