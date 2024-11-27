@@ -19,6 +19,14 @@ app.use((req, res, next) => {
   next()
 })
 
+// Add health check endpoint for Kubernetes probes
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString()
+  })
+})
+
 // Serve the runtime config
 app.get('/config.js', (req, res) => {
   logger.info('Serving config', {
