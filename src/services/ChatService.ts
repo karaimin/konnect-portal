@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { config } from '@/config'
 
 export interface ChatMessage {
@@ -28,10 +28,21 @@ interface ChatRequest {
 
 export class ChatService {
   private baseUrl: string
+
   private readonly orgUnitId = '14667939-6a1d-473a-8457-6a5f4de8c401'
+
+  private client: AxiosInstance
 
   constructor () {
     this.baseUrl = config.apiBaseUrl
+
+    this.client = axios.create({
+      baseURL: this.baseUrl,
+      // withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   }
 
   async sendMessage (messages: ChatMessage[]): Promise<ChatResponse> {
@@ -47,8 +58,8 @@ export class ChatService {
       }
     }
 
-    const response = await axios.post<ChatResponse>(
-      `${this.baseUrl}/api/v1/ai-gateway/api-assistant/invoke`,
+    const response = await this.client.post<ChatResponse>(
+      '/api/chat',
       payload,
       {
         headers: {

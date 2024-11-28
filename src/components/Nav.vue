@@ -20,6 +20,16 @@
           <div class="background-color-wrapper" />
           {{ helpText.nav.catalog }}
         </router-link>
+        <KButton
+          data-testid="ai-link"
+          appearance="custom"
+          :is-rounded="false"
+          class="ai-nav-button"
+          @click="$emit('openAiChat')"
+        >
+          <span class="robot-icon mr-1">🤖</span>
+          AI Assistant
+        </KButton>
         <NavDropdown
           v-if="developer && !isPublic"
           :label="developer.email"
@@ -98,6 +108,29 @@ export default defineComponent({
     &:hover{
       backdrop-filter: brightness(1.35);
     }
+  }
+}
+
+.ai-nav-button {
+  margin-right: 1rem;
+  padding: 0.25rem 0.75rem !important;
+  font-weight: 500;
+  font-size: 14px;
+  height: 28px;
+  min-width: auto !important;
+  display: inline-flex;
+  align-items: center;
+  background-color: #8B3DFF !important;
+  color: white !important;
+  border: none !important;
+
+  &:hover {
+    background-color: #7433D9 !important;
+  }
+
+  .robot-icon {
+    font-size: 14px;
+    line-height: 1;
   }
 }
 </style>

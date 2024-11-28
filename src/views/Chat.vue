@@ -19,7 +19,7 @@
         >
           <div
             class="message-content"
-            v-html="renderMarkdown(message.content)"
+            v-text="renderMarkdown(message.content)"
           />
         </div>
 

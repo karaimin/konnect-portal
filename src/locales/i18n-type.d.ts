@@ -350,6 +350,7 @@ export interface I18nType {
     inputPlaceholder: string;
     send: string;
     error: string;
+    clearConfirmation: string;
   },
   aiAssistant: {
     shortDescription: string;

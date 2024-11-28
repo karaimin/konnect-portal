@@ -46,6 +46,23 @@ function createCustomLogger () {
   return logger
 }
 
+// Add this plugin configuration
+const configJsPlugin = {
+  name: 'config-js',
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      if (req.url === '/config.js') {
+        res.setHeader('Content-Type', 'application/javascript')
+        res.end(`window.__APP_CONFIG__ = {
+          apiBaseUrl: "${process.env.VITE_API_BASE_URL || 'http://localhost:8000'}"
+        }`)
+        return
+      }
+      next()
+    })
+  }
+}
+
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
@@ -105,15 +122,8 @@ export default ({ mode }) => {
       }
     },
     plugins: [
-      vue(
-        {
-          template: {
-            transformAssetUrls: {
-              includeAbsolute: false
-            }
-          }
-        }
-      ),
+      configJsPlugin,  // Add this plugin
+      vue(),
       vueJsx(),
       svgLoader()
     ],

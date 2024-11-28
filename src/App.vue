@@ -11,20 +11,31 @@
       />
     </div>
     <template v-else>
-      <Nav v-if="isFullScreen" />
+      <Nav
+        v-if="isFullScreen"
+        @openAiChat="isChatOpen = true"
+      />
 
-      <router-view v-slot="{ Component }">
+      <router-view
+        v-slot="{ Component }"
+        @openAiChat="isChatOpen = true"
+      >
         <component
           :is="Component"
           :class="{'page': isFullScreen }"
         />
       </router-view>
     </template>
+
+    <ChatDrawer
+      :is-open="isChatOpen"
+      @close="isChatOpen = false"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { mapState, mapActions } from 'pinia'
 import { ApiServiceAuthErrorReason } from '@/services/PortalV2ApiService'
 import removeElementFromDOMById from '@/helpers/removeElementFromDOMById'
@@ -34,21 +45,28 @@ import { portalApiV2 } from '@/services'
 import { useAppStore } from '@/stores'
 import { createRedirectHandler } from './helpers/auth'
 import { useHead } from '@unhead/vue'
+import ChatDrawer from '@/components/ChatDrawer.vue'
 
 const initialLoadingId = 'initial-fullscreen-loading-container'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Nav
+    Nav,
+    ChatDrawer
   },
   setup () {
     const { canonicalDomain } = useAppStore()
+    const isChatOpen = ref(false)
 
     useHead({
       link: [{ rel: 'canonical', href: canonicalDomain }]
     })
     removeElementFromDOMById(initialLoadingId)
+
+    return {
+      isChatOpen
+    }
   },
   computed: {
     ...mapState(useAppStore, ['globalLoading']),
@@ -116,4 +134,24 @@ export default defineComponent({
     flex-direction: column;
     background: var(--white)
   }
+</style>
+
+<style lang="scss">
+.chat-trigger {
+  position: fixed;
+  top: 12px;
+  right: 20px;
+  z-index: 1031;
+  padding: var(--spacing-sm) var(--spacing-md) !important;
+  min-width: auto !important;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  transition: all 0.2s ease;
+}
 </style>

@@ -42,10 +42,10 @@
 
         <!-- AI Assistant Banner -->
         <div class="ai-assistant-banner mt-2">
-          <router-link
-            :to="{ name: 'chat' }"
-            class="flex items-center p-2"
+          <button
+            class="flex items-center p-2 w-full text-left"
             data-testid="try-ai-assistant"
+            @click="$emit('openAiChat')"
           >
             <span class="ai-icon mr-2">🤖</span>
             <span class="color-text_colors-secondary text-sm mr-3">
@@ -59,7 +59,7 @@
                 class="ml-1"
               />
             </span>
-          </router-link>
+          </button>
         </div>
       </div>
     </div>
@@ -86,6 +86,7 @@ import { useI18nStore, CatalogItemModel } from '@/stores'
 export default defineComponent({
   name: 'ProductCatalogWrapper',
   components: { Catalog },
+  emits: ['openAiChat'],
 
   setup () {
     const catalog_cover_style = ref<{backgroundImage:string}>({ backgroundImage: '' })

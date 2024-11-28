@@ -345,10 +345,11 @@ export const en = {
     defaultError: '[Authorization failed]: no accessCode received from the server'
   },
   chat: {
-    title: 'AI Chat',
+    title: 'AI Assistant',
     inputPlaceholder: 'Type your message...',
     send: 'Send',
-    error: 'An error occurred while sending your message. Please try again.'
+    error: 'An error occurred while sending your message. Please try again.',
+    clearConfirmation: 'Are you sure you want to clear the conversation?'
   },
   aiAssistant: {
     shortDescription: 'Need help with APIs?',
